@@ -13,8 +13,10 @@ routes = (app) => {
     // res.json(data);
   });
 
-  app.delete('/todo', (req, res) => {
-    
+  app.delete('/todo/:item', (req, res) => {
+    data = data.filter( (todo) => {
+      return todo.item.replace(/ /g, "-") !== req.params.item
+    });
     res.render('todo.ejs', {data: data});
   });
 
