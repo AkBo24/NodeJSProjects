@@ -1,0 +1,24 @@
+{
+  "name": "nodejsprojects",
+  "version": "1.0.0",
+  "description": "Todo List App",
+  "main": "index.js",
+  "scripts": {
+    "test": "todo-list"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AkBo24/NodeJSProjects.git"
+  },
+  "author": "Akshay Bodla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AkBo24/NodeJSProjects/issues"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  },
+  "homepage": "https://github.com/AkBo24/NodeJSProjects#readme"
+}
