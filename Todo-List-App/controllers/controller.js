@@ -1,6 +1,6 @@
 routes = (app) => {
   app.get('/todo', (req, res) => {
-
+    res.render('todo.ejs');
   });
 
   app.post('/todo', (req, res) => {
@@ -10,7 +10,7 @@ routes = (app) => {
   app.delete('/todo', (req, res) => {
 
   });
-  
+
 }
 
 module.exports = {
