@@ -2,7 +2,7 @@
   "name": "nodejsprojects",
   "version": "1.0.0",
   "description": "Todo List App",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "todo-list"
   },
