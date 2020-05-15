@@ -8,8 +8,8 @@ routes = (app) => {
   });
 
   app.post('/todo', urlencodedParser, (req, res) => {
-    data.push( req.body);
-    res.json(data);
+    data.push( req.body );
+    res.render('todo.ejs', {data: data})
   });
 
   app.delete('/todo', (req, res) => {
