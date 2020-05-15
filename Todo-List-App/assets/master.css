@@ -34,7 +34,7 @@ button{
     padding: 20px;
     width: 20%;
     float: left;
-    background: #23282e;
+    background: #00224A;
     border: 0;
     box-sizing: border-box;
     color: #fff;
@@ -56,11 +56,12 @@ li{
     font-size: 20px;
     cursor: pointer;
     letter-spacing: 1px;
+    color: #00224A;
 }
 
 li:hover{
     text-decoration: line-through;
-    background: rgba(0,0,0,0.2);
+    background: #E5E9F0;
 }
 
 h1{

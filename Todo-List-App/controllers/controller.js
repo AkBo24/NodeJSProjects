@@ -1,10 +1,15 @@
+const bodyParser = require('body-parser');
+const urlencodedParser = bodyParser.urlencoded( {extended: false} );
+let   data = [{item: "todo 1"}, {item: "todo 2"}, {item: "todo 3"}];
+
 routes = (app) => {
   app.get('/todo', (req, res) => {
-    res.render('todo.ejs');
+    res.render('todo.ejs', {data: data});
   });
 
-  app.post('/todo', (req, res) => {
-
+  app.post('/todo', urlencodedParser, (req, res) => {
+    data.push( req.body);
+    res.json(data);
   });
 
   app.delete('/todo', (req, res) => {

@@ -15,10 +15,12 @@
       <button type = "submit">Add Item</button>
     </form>
 
-
     <ul>
-        <li>Item 1</li>
-        <li>Item 2</li>
+
+      <% for(let i = 0; i < data.length; i++){ %>
+        <li> <%= data[i].item %> </li>
+      <% } %>
+
     </ul>
   </div>
 

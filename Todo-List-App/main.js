@@ -7,6 +7,7 @@ const express    = require('express');
 const controller = require('./controllers/controller.js');
 const app        = express();
 
+
 /* Render and control the server */
 app.set('view engine', 'ejs');
 app.use(express.static('./assets'));
