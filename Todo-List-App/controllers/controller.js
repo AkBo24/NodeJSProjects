@@ -9,11 +9,13 @@ routes = (app) => {
 
   app.post('/todo', urlencodedParser, (req, res) => {
     data.push( req.body );
-    res.render('todo.ejs', {data: data})
+    res.render('todo.ejs', {data: data});
+    // res.json(data);
   });
 
   app.delete('/todo', (req, res) => {
-
+    
+    res.render('todo.ejs', {data: data});
   });
 
 }
