@@ -51,10 +51,17 @@ routes = (app) => {
   });
 
   app.delete('/todo/:item', (req, res) => {
-    data = data.filter( (todo) => {
-      return todo.item.replace(/ /g, "-") !== req.params.item
+
+    Todo.find( {item: req.params.item.replace(/\-/g, " ")} ).remove( (err, data) => {
+      if(err) throw err;
+      res.render('todo.ejs', {data: data})
     });
-    res.render('todo.ejs', {data: data});
+
+    // data = data.filter( (todo) => {
+    //   return todo.item.replace(/ /g, "-") !== req.params.item
+    // });
+    // res.render('todo.ejs', {data: data});
+
   });
 
 }
