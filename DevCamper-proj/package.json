@@ -1,0 +1,28 @@
+{
+  "name": "devcamper-proj",
+  "version": "1.0.0",
+  "description": "Dev Camper Project",
+  "main": "main.js",
+  "scripts": {
+    "test": "nodemon main.js",
+    "start": "nodemon --exec babel-node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AkBo24/NodeJSProjects.git"
+  },
+  "author": "Akshay Bodla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AkBo24/NodeJSProjects/issues"
+  },
+  "dependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "7.9.6",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  },
+  "homepage": "https://github.com/AkBo24/NodeJSProjects#readme"
+}
