@@ -1,17 +1,15 @@
+//Try adding this to beginning of start in package.json scripts/start: NODE_ENV=
+
 //Required Modules
 import express from 'express';
 import dotenv  from 'dotenv';
-
-//Try adding this to beginning of start in package.json scripts/start: NODE_ENV=
+import controller   from './controllers/controller.js';
 
 //Construct/Set-up the modules
 const server = express();
 dotenv.config( {path: './config/config.env'} );
 
-server.get('/', (req, res) => {
-    res.send('Hello');
-})
-
+controller(server);
 
 //Set-up Node Server
 const PORT = process.env.PORT || 3000
