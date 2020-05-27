@@ -5,10 +5,14 @@
 import express from 'express';
 import dotenv  from 'dotenv';
 import controller   from './controllers/controller.js';
+import database, { connectMongo } from './MongoDB/database.js'
 
 //Construct/Set-up the modules
 const server = express();
 dotenv.config( {path: './config/config.env'} ); //get environment enumerators (constants)
+
+//Connect to MongoDB
+connectMongo();
 
 //Web app routes etc
 server.use('/api/v1/bootcamps', controller); //set default route

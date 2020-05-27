@@ -17,7 +17,6 @@ export function getBootCamps(req, res, next) {
 //@Desc     Get single boot camp 
 //@Route    /api/v1/bootcamps/:id
 //@Access   public
-
 export function getBootCamp(req, res, next) {
     res.json({ success: true, msg: `Viewing bootcamp ${req.params.id}` });
 }
@@ -25,7 +24,6 @@ export function getBootCamp(req, res, next) {
 //@Desc     Create a new Bootcamp
 //@Route    /api/v1/bootcamps/
 //@Access   private, for authorized users
-
 export function createBootCamp(req, res, next) {
     res.json({ success: true, msg: `Create new bootcamp` });
 }
@@ -33,7 +31,6 @@ export function createBootCamp(req, res, next) {
 //@Desc     Update a boot camp
 //@Route    /api/v1/bootcamps/:id
 //@Access   private
-
 export function updateCamp(req, res, next) {
     res.json({ success: true, msg: `Updating bootamp ${req.params.id}` });
 }
@@ -41,7 +38,6 @@ export function updateCamp(req, res, next) {
 //@Desc     Delete a boot camps
 //@Route    /api/v1/bootcamps/:id
 //@Access   public
-
 export function deleteCamp(req, res, next) {
     res.json({ success: true, msg: `Deleted bootcamp ${req.params.id}` });
 }
