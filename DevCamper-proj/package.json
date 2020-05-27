@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "nodemon main.js",
-    "start": "nodemon --exec babel-node main.js"
+    "start": "nodemon --exec babel-node main.js",
+    "dev": "nodemon server"
   },
   "repository": {
     "type": "git",
