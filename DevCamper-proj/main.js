@@ -22,3 +22,10 @@ server.use('/api/v1/bootcamps', controller); //set default route
 const PORT = process.env.PORT || 3000
 server.listen(PORT, '127.0.0.1');
 console.log(`Listening to port ${PORT} in the server mode ${process.env.NODE_ENV}`);
+
+//Handeling Exceptions
+process.on('unhandeledRejection', (err, promise) => {
+    console.log(`Unhandeled Promise: ${err.message}`);
+    //close and quit server
+    server.close(() => process.exit(1));
+});
