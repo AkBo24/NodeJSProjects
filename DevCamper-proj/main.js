@@ -1,15 +1,18 @@
 //Try adding this to beginning of start in package.json scripts/start: NODE_ENV=
 
 //Required Modules
+// require("@babel/core").transform("code", options);
 import express from 'express';
 import dotenv  from 'dotenv';
 import controller   from './controllers/controller.js';
 
 //Construct/Set-up the modules
 const server = express();
-dotenv.config( {path: './config/config.env'} );
+dotenv.config( {path: './config/config.env'} ); //get environment enumerators (constants)
 
-controller(server);
+//Web app routes etc
+server.use('/api/v1/bootcamps', controller); //set default route
+// controller();
 
 //Set-up Node Server
 const PORT = process.env.PORT || 3000

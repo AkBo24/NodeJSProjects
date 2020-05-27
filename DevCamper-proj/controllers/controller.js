@@ -1,27 +1,28 @@
-const controller = (server) => {
-    server.get('/', (req, res) => {
-        res.status(404).json( {success: false, msg: "page not found"} )
-    });
-    
-    server.get('/api/v1/bootcamps', (req, res) => {
-        res.json( {success: true, msg: 'Show all bootcamps'} );
-    });
+import express from 'express';
+const  routes = express.Router();
 
-    server.get('/api/v1/bootcamps/:id', (req, res) => {
-        res.json( { success: true, msg: `Viewing bootcamp ${req.params.id}` });
-    });   
-    
-    server.post('/api/v1/bootcamps', (req, res) => {
-        res.json( { success: true, msg: `Create new bootcamp` });
-    });
+routes.get('/', (req, res) => {
+    res.status(404).json( {success: false, msg: "page not found"} )
+});
 
-    server.put('/api/v1/bootcamps/:id', (req, res) => {
-        res.json( { success: true, msg: `Updating bootamp ${req.params.id}` });
-    });
+routes.get('/', (req, res) => {
+    res.json( {success: true, msg: 'Show all bootcamps'} );
+});
 
-    server.delete('/api/v1/bootcamps/:id', (req, res) => {
-        res.json( { success: true, msg: `Deleted bootcamp ${req.params.id}` } );
-    });
-};
+routes.get('/:id', (req, res) => {
+    res.json( { success: true, msg: `Viewing bootcamp ${req.params.id}` });
+});   
 
-export default controller;
+routes.post('/', (req, res) => {
+    res.json( { success: true, msg: `Create new bootcamp` });
+});
+
+routes.put('/:id', (req, res) => {
+    res.json( { success: true, msg: `Updating bootamp ${req.params.id}` });
+});
+
+routes.delete('/:id', (req, res) => {
+   res.json( { success: true, msg: `Deleted bootcamp ${req.params.id}` } );
+});
+
+module.exports = routes;
