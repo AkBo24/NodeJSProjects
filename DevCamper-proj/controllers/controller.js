@@ -1,28 +1,24 @@
 import express from 'express';
 const  routes = express.Router();
 
-routes.get('/', (req, res) => {
-    res.status(404).json( {success: false, msg: "page not found"} )
-});
+//Get route middleware
+const {
+    notFound,
+    getBootCamps,
+    getBootCamp,
+    createBootCamp,
+    updateCamp,
+    deleteCamp
+} = require('./routes.js');
 
-routes.get('/', (req, res) => {
-    res.json( {success: true, msg: 'Show all bootcamps'} );
-});
+//Routes config
+routes.route('/')
+      .get(getBootCamps)
+      .post(createBootCamp);
 
-routes.get('/:id', (req, res) => {
-    res.json( { success: true, msg: `Viewing bootcamp ${req.params.id}` });
-});   
-
-routes.post('/', (req, res) => {
-    res.json( { success: true, msg: `Create new bootcamp` });
-});
-
-routes.put('/:id', (req, res) => {
-    res.json( { success: true, msg: `Updating bootamp ${req.params.id}` });
-});
-
-routes.delete('/:id', (req, res) => {
-   res.json( { success: true, msg: `Deleted bootcamp ${req.params.id}` } );
-});
+routes.route('/:id')
+      .get(getBootCamp)
+      .put(updateCamp)
+      .delete(deleteCamp);
 
 module.exports = routes;
