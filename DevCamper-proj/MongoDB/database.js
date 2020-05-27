@@ -7,6 +7,6 @@ export async function connectMongo () {
         useFindAndModify: false, 
         useUnifiedTopology: true
     });
-    console.log(`Connected to mongoDB at ${db.connection.host}`);
+    console.log(`Connected to mongoDB at ${db.connection.host}`.magenta.bold);
 
 };
