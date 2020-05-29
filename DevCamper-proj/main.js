@@ -10,6 +10,7 @@ import { connectMongo } from './MongoDB/database.js'
 
 //Construct/Set-up the modules
 const server = express();
+server.use(express.json()) //Body Parser Middleware
 dotenv.config( {path: './config/config.env'} ); //get environment enumerators (constants)
 
 //Connect to MongoDB
