@@ -1,15 +1,28 @@
 
 import { bootCampSchema } from '../MongoDB/Schema/Bootcamp.js';
+import { restart } from 'nodemon';
 // const bootCampSchema = require('../MongoDB/Schema/Bootcamp.js');
 
 //@Desc     Get all boot camps
 //@Route    /api/v1/bootcamps/
 //@Access   public
 //@Request   GET
-export function getBootCamps(req, res, next) {
+export async function getBootCamps(req, res, next) {
 
+    try{
+        const allBC = await bootCampSchema.find();
 
-    // res.json({ success: true, msg: 'Show all bootcamps' });
+        if(!allBC) 
+            return res
+                    .status(400)
+                    .json( {success: false} );
+        
+        res.json({ success: true, bootCamps: allBC });
+    }
+    catch {
+
+    }
+
 }
 
 //@Desc     Get single boot camp 
