@@ -9,7 +9,7 @@ export async function getBootCamps(req, res, next) {
     try{
         const allBC = await bootCampSchema.find();
         if(!allBC) 
-            return res
+            return new res
                     .status(400)
                     .json( {success: false, msg: "No boot camps available"} );
         
@@ -70,7 +70,25 @@ export async function createBootCamp(req, res, next) {
 //@Route    /api/v1/bootcamps/:id
 //@Access   private
 //@Request  PUT
-export function updateCamp(req, res, next) {
+export async function updateCamp(req, res, next) {
+
+    try{
+        const newBC = await bootCampSchema.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true
+        });
+
+        if(!newBC)
+            return res.status(400).json( {success: false} )
+
+        res.status(200).json( {success: true, msg: `Updated bootcamp ${newBC.name}`} );
+    }
+    catch(err) {
+        res
+            .status(400)
+            .json({ success: false, err });
+    }
+
     res.json({ success: true, msg: `Updating bootamp ${req.params.id}` });
 }
 
@@ -80,22 +98,10 @@ export function updateCamp(req, res, next) {
 //@Request  DELETE
 export async function deleteCamp(req, res, next) {
     try {
-
-        await bootCampSchema.deleteOne(bootCampSchema.findById(req.params.id));
-
+        await bootCampSchema.findByIdAndDelete(req.params.id);
         res
             .status(200)
             .json( {success: true, msg: 'Bootcamp successfully deleted'} );
-    //     const newBootCamp = await bootCampSchema.findById(req.params.id);
-
-    //     if(!newBootCamp)
-    //         return res
-    //             .status(400)
-    //             .json({ success: false, msg: "No boot camps available" });
-
-    //     res
-    //         .status(200)
-    //         .json({ success: true });
     }
     catch (err) {
         res
