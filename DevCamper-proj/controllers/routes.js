@@ -7,7 +7,9 @@ import { bootCampSchema } from '../MongoDB/Schema/Bootcamp.js';
 //@Access   public
 //@Request   GET
 export function getBootCamps(req, res, next) {
-    res.json({ success: true, msg: 'Show all bootcamps' });
+
+
+    // res.json({ success: true, msg: 'Show all bootcamps' });
 }
 
 //@Desc     Get single boot camp 
@@ -26,12 +28,19 @@ export async function createBootCamp(req, res, next) {
 
     //Request bootcamp data from req.body
     // console.log(typeof bootCampSchema);
-    const bcJSON = req.body;
-    const newBootCamp = await bootCampSchema.create(bcJSON);
+    try {
+        const bcJSON = req.body;
+        const newBootCamp = await bootCampSchema.create(bcJSON);
 
-    res
-       .status(201)
-        .json({ success: true, msg: `Created new bootcamp: ${bcJSON.name}` });
+        res
+            .status(201)
+            .json({ success: true, msg: `Created new bootcamp: ${bcJSON.name}` });
+    }
+    catch(err) {
+        res
+            .status(400)
+            .json( {success: false, } );
+    }
 }
 
 //@Desc     Update a boot camp
