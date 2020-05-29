@@ -1,11 +1,6 @@
 
-// routes.get('/', (req, res) => {
-//     res.status(404).json({ success: false, msg: "page not found" })
-// });
-
-// exports.notFound(req, res, next) {
-//     res.status(404).json({ success: false, msg: "page not found" });
-// }
+import { bootCampSchema } from '../MongoDB/Schema/Bootcamp.js';
+// const bootCampSchema = require('../MongoDB/Schema/Bootcamp.js');
 
 //@Desc     Get all boot camps
 //@Route    /api/v1/bootcamps/
@@ -27,8 +22,16 @@ export function getBootCamp(req, res, next) {
 //@Route    /api/v1/bootcamps/
 //@Access   private, for authorized users
 //@Request  POST
-export function createBootCamp(req, res, next) {
-    res.json({ success: true, msg: `Create new bootcamp` });
+export async function createBootCamp(req, res, next) {
+
+    //Request bootcamp data from req.body
+    // console.log(typeof bootCampSchema);
+    const bcJSON = req.body;
+    const newBootCamp = await bootCampSchema.create(bcJSON);
+
+    res
+       .status(201)
+        .json({ success: true, msg: `Created new bootcamp: ${bcJSON.name}` });
 }
 
 //@Desc     Update a boot camp
@@ -46,3 +49,13 @@ export function updateCamp(req, res, next) {
 export function deleteCamp(req, res, next) {
     res.json({ success: true, msg: `Deleted bootcamp ${req.params.id}` });
 }
+
+
+
+// routes.get('/', (req, res) => {
+//     res.status(404).json({ success: false, msg: "page not found" })
+// });
+
+// exports.notFound(req, res, next) {
+//     res.status(404).json({ success: false, msg: "page not found" });
+// }
