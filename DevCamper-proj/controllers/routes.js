@@ -8,19 +8,19 @@ import { restart } from 'nodemon';
 //@Access   public
 //@Request   GET
 export async function getBootCamps(req, res, next) {
-
     try{
         const allBC = await bootCampSchema.find();
-
         if(!allBC) 
             return res
                     .status(400)
-                    .json( {success: false} );
+                    .json( {success: false, msg: "No boot camps available"} );
         
         res.json({ success: true, bootCamps: allBC });
     }
-    catch {
-
+    catch (err) {
+        res
+            .status(400)
+            .json( {success: false, msg: err} );
     }
 
 }
@@ -29,8 +29,24 @@ export async function getBootCamps(req, res, next) {
 //@Route    /api/v1/bootcamps/:id
 //@Access   public
 //@Request  GET
-export function getBootCamp(req, res, next) {
-    res.json({ success: true, msg: `Viewing bootcamp ${req.params.id}` });
+export async function getBootCamp(req, res, next) {
+
+    try {
+        const allBC = await bootCampSchema.findById(req.params.id);
+        if (!allBC)
+            return res
+                .status(400)
+                .json({ success: false, msg: "No boot camps available" });
+
+        res.json({ success: true, bootCamps: allBC });
+    }
+    catch (err) {
+        res
+            .status(400)
+            .json({ success: false, msg: err });
+    }
+
+    // res.json({ success: true, msg: `Viewing bootcamp ${req.params.id}` });
 }
 
 //@Desc     Create a new Bootcamp
