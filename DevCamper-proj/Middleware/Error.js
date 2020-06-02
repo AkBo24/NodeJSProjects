@@ -1,8 +1,12 @@
-export const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
     //Log Err
+    
     console.log(err.stack.red);
     
-        res
-            .status(500)
-            .json({ success: false, err: err.message });
-}
+    //Retun message to user
+    res
+        .status(500)
+        .json({ success: false, err: err.message });
+};
+
+module.exports = errorHandler;
