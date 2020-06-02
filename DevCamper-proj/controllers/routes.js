@@ -39,9 +39,10 @@ export async function getBootCamp(req, res, next) {
         res.json({ success: true, bootCamps: allBC });
     }
     catch (err) {
-        res
-            .status(400)
-            .json({ success: false, msg: err });
+        next(err);
+        // res
+        //     .status(400)
+        //     .json({ success: false, msg: err });
     }
 }
 
