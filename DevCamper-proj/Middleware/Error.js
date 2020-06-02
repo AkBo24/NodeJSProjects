@@ -5,8 +5,8 @@ const errorHandler = (err, req, res, next) => {
     
     //Retun message to user
     res
-        .status(500)
-        .json({ success: false, err: err.message });
+        .status(err.statusCode || 500)
+        .json({ success: false, err: err.message || 'Server Error' });
 };
 
 module.exports = errorHandler;

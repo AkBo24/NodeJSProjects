@@ -1,5 +1,6 @@
 
 import { bootCampSchema } from '../MongoDB/Schema/Bootcamp.js';
+import { ErrorResponse  } from '../Utils/ErrorResponse.js'
 
 //@Desc     Get all boot camps
 //@Route    /api/v1/bootcamps/
@@ -39,10 +40,7 @@ export async function getBootCamp(req, res, next) {
         res.json({ success: true, bootCamps: allBC });
     }
     catch (err) {
-        next(err);
-        // res
-        //     .status(400)
-        //     .json({ success: false, msg: err });
+        next(new ErrorResponse(`Bootcamp not found with id ${req.params.id}`, 404));
     }
 }
 
