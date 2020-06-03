@@ -60,9 +60,7 @@ export async function createBootCamp(req, res, next) {
             .json({ success: true, msg: `Created new bootcamp: ${bcJSON.name}` });
     }
     catch(err) {
-        res
-            .status(400)
-            .json( {success: false, err } );
+        next(err);
     }
 }
 
