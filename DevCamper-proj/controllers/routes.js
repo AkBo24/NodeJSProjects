@@ -14,12 +14,7 @@ import { ErrorResponse  } from '../Utils/ErrorResponse.js'
 export const getBootCamps = routesHandler ( async (req, res, next) => {
     const allBC = await bootCampSchema.find();
     
-    if (!allBC)
-        return next(
-            new ErrorResponse(`No Bootcamps found`, 200)
-        );
-
-    res.json({ success: true, bootCamps: allBC });
+    res.json({ success: true, count: allBC.length,bootCamps: allBC });
 
 });
 
@@ -28,7 +23,6 @@ export const getBootCamps = routesHandler ( async (req, res, next) => {
 //@Access   public
 //@Request  GET
 export const getBootCamp = routesHandler(async (req, res, next) => {
-    // console.log('hi!');
     
     const bootCamp = await bootCampSchema.findById(req.params.id);
     if (!bootCamp)
@@ -82,9 +76,7 @@ export const deleteCamp = routesHandler(async (req, res, next) => {
             new ErrorResponse(`Bootcamp with id "${req.params.id}" could not be found`, 404)
         );
 
-    res
-        .status(200)
-        .json({ success: true, msg: `Bootcamp successfully deleted (id="${delBC.id}")` });
+    res.status(200).json({ success: true, msg: `Bootcamp successfully deleted (id="${delBC.id}")` });
 });
 
 
