@@ -1,7 +1,7 @@
 
 import { bootCampSchema } from '../MongoDB/Schema/Bootcamp.js';
-import { routesHandler } from '../Middleware/AsyncRoutesHandler.js'
-
+import { routesHandler  } from '../Middleware/AsyncRoutesHandler.js'
+import { ErrorResponse  } from '../Utils/ErrorResponse.js'
 /**
  * The error is handeled inside ErrorHandler.js
  */
@@ -31,9 +31,9 @@ export const getBootCamp = routesHandler(async (req, res, next) => {
     
     const bootCamp = await bootCampSchema.findById(req.params.id);
     if (!bootCamp)
-        return res
-            .status(400)
-            .json({ success: false, msg: `No Bootcamp with id ${req.params.id} available` });
+        return next( 
+            new ErrorResponse( `Bootcamp with id "${req.params.id}" could not be found`, 404)
+        );
 
     res.json({ success: true, bootCamp: bootCamp });
 
@@ -58,40 +58,33 @@ export const createBootCamp = routesHandler( async (req, res, next) => {
 //@Route    /api/v1/bootcamps/:id
 //@Access   private
 //@Request  PUT
-export async function updateCamp(req, res, next) {
+export const updateCamp = routesHandler(async (req, res, next) => {
 
-    try{
-        const newBC = await bootCampSchema.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true
-        });
+    const newBC = await bootCampSchema.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true
+    });
 
-        if(!newBC)
-            return res.status(400).json( {success: false} )
+    res.status(200).json( { success: true, msg: `Updated bootcamp ${newBC.name}` } );
 
-        res.status(200).json( {success: true, msg: `Updated bootcamp ${newBC.name}`} );
-    }
-    catch(err) {
-        next(err);
-    }
-}
+});
 
 //@Desc     Delete a Bootcamp
 //@Route    /api/v1/bootcamps/:id
 //@Access   public
 //@Request  DELETE
-export async function deleteCamp(req, res, next) {
-    try {
-        await bootCampSchema.findByIdAndDelete(req.params.id);
-        res
-            .status(200)
-            .json( {success: true, msg: 'Bootcamp successfully deleted'} );
-    }
-    catch (err) {
-        next(err);
-    }
-    // res.json({ success: true, msg: `Deleted bootcamp ${req.params.id}` });
-}
+export const deleteCamp = routesHandler(async (req, res, next) => {
+    const delBC = await bootCampSchema.findByIdAndDelete(req.params.id);
+    
+    if(!delBC)
+        return next(
+            new ErrorResponse(`Bootcamp with id "${req.params.id}" could not be found`, 404)
+        );
+
+    res
+        .status(200)
+        .json({ success: true, msg: `Bootcamp successfully deleted (id="${delBC.id}")` });
+});
 
 
 
