@@ -41,6 +41,8 @@ export const getBootCamp = routesHandler(async (req, res, next) => {
 export const createBootCamp = routesHandler( async (req, res, next) => {
     //Request bootcamp data from req.body
     const bcJSON = req.body;
+    // console.log(bcJSON);
+    
     const bootCamp = await bootCampSchema.create(bcJSON);
 
     res
@@ -54,7 +56,6 @@ export const createBootCamp = routesHandler( async (req, res, next) => {
 //@Access   private
 //@Request  PUT
 export const updateCamp = routesHandler(async (req, res, next) => {
-
     const newBC = await bootCampSchema.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true
