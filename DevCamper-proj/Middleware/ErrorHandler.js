@@ -9,7 +9,7 @@ const errorHandler = (err, req, res, next) => {
     /*  Error Handlers for Mongoose DB  */
     //@Request  : GET
     //@Desc     : Bootcamp w/ specific id could not be found
-    if(err.name === 'CastError') {
+    if (err.name === 'CastError') {
         message = `Bootcamp with the id ${error.value} could not be found.`
         error   = new ErrorResponse(message, 404);
     }
@@ -20,8 +20,15 @@ const errorHandler = (err, req, res, next) => {
         error   =  new ErrorResponse(message, 400);
     }
     
+    //@Request  : POST
+    //@Desc     : Creating a boot camp with missing values
+    if (err.name === 'ValidatorError') {
+        message = Object.values(err.errors).map(val => val.message);
+        error   = new ErrorResponse(message, 400);
+    }
+
     //Dev Log errors
-    console.log(err.stack.red);
+    console.log(err);
     //Retun message to user
     res
         .status(error.statusCode || 500)
