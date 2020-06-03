@@ -1,7 +1,7 @@
 import { ErrorResponse } from '../Utils/ErrorResponse.js'
 
 const errorHandler = (err, req, res, next) => {
-
+    
     let error   = {...err};
     let message = undefined;
     error.message = err.message;
@@ -22,7 +22,7 @@ const errorHandler = (err, req, res, next) => {
     
     //@Request  : POST
     //@Desc     : Creating a boot camp with missing values
-    if (err.name === 'ValidatorError') {
+    if (err.name === 'ValidationError') {
         message = Object.values(err.errors).map(val => val.message);
         error   = new ErrorResponse(message, 400);
     }
