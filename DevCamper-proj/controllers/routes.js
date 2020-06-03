@@ -1,28 +1,27 @@
 
 import { bootCampSchema } from '../MongoDB/Schema/Bootcamp.js';
-import { ErrorResponse  } from '../Utils/ErrorResponse.js'
+import { routesHandler } from '../Middleware/AsyncRoutesHandler.js'
+
+/**
+ * The error is handeled inside ErrorHandler.js
+ */
 
 //@Desc     Get all Bootcamps
 //@Route    /api/v1/bootcamps/
 //@Access   public
 //@Request   GET
-export async function getBootCamps(req, res, next) {
-    try{
-        const allBC = await bootCampSchema.find();
-        if(!allBC) 
-            return new res
-                    .status(400)
-                    .json( {success: false, msg: "No Bootcamps available"} );
-        
-        res.json({ success: true, bootCamps: allBC });
-    }
-    catch (err) {
-        res
-            .status(400)
-            .json( {success: false, msg: err} );
-    }
 
-}
+exports.getBootCamps = routesHandler ( async (req, res, next) => {
+
+    const allBC = await bootCampSchema.find();
+    if (!allBC)
+        return new res
+            .status(400)
+            .json({ success: false, msg: "No Bootcamps available" });
+
+    res.json({ success: true, bootCamps: allBC });
+
+});
 
 //@Desc     Get single Bootcamp 
 //@Route    /api/v1/bootcamps/:id
@@ -53,7 +52,6 @@ export async function createBootCamp(req, res, next) {
     //Request bootcamp data from req.body
     try {
         const bcJSON = req.body;
-        const newBootCamp = await bootCampSchema.create(bcJSON);
 
         res
             .status(201)
@@ -82,12 +80,8 @@ export async function updateCamp(req, res, next) {
         res.status(200).json( {success: true, msg: `Updated bootcamp ${newBC.name}`} );
     }
     catch(err) {
-        res
-            .status(400)
-            .json({ success: false, err });
+        next(err);
     }
-
-    res.json({ success: true, msg: `Updating bootamp ${req.params.id}` });
 }
 
 //@Desc     Delete a Bootcamp
@@ -102,9 +96,7 @@ export async function deleteCamp(req, res, next) {
             .json( {success: true, msg: 'Bootcamp successfully deleted'} );
     }
     catch (err) {
-        res
-            .status(400)
-            .json({ success: false, msg: 'Bootcamp ', err});
+        next(err);
     }
     // res.json({ success: true, msg: `Deleted bootcamp ${req.params.id}` });
 }
