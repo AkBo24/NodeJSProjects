@@ -3,7 +3,8 @@ import { bootCampSchema } from '../MongoDB/Schema/Bootcamp.js';
 import { routesHandler  } from '../Middleware/AsyncRoutesHandler.js'
 import { ErrorResponse  } from '../Utils/ErrorResponse.js'
 /**
- * The error is handeled inside ErrorHandler.js
+ * Errors are wrapped inside AsyncRoutesHandler.js which, if the promise is rejected by a thrown error,
+ * is handled inside ErrorHandler.js
  */
 
 //@Desc     Get all Bootcamps
@@ -14,9 +15,9 @@ export const getBootCamps = routesHandler ( async (req, res, next) => {
     const allBC = await bootCampSchema.find();
     
     if (!allBC)
-        return new res
-            .status(400)
-            .json({ success: false, msg: "No Bootcamps available" });
+        return next(
+            new ErrorResponse(`No Bootcamps found`, 200)
+        );
 
     res.json({ success: true, bootCamps: allBC });
 
