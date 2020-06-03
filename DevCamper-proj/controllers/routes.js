@@ -10,10 +10,9 @@ import { routesHandler } from '../Middleware/AsyncRoutesHandler.js'
 //@Route    /api/v1/bootcamps/
 //@Access   public
 //@Request   GET
-
-exports.getBootCamps = routesHandler ( async (req, res, next) => {
-
+export const getBootCamps = routesHandler ( async (req, res, next) => {
     const allBC = await bootCampSchema.find();
+    
     if (!allBC)
         return new res
             .status(400)
@@ -27,40 +26,33 @@ exports.getBootCamps = routesHandler ( async (req, res, next) => {
 //@Route    /api/v1/bootcamps/:id
 //@Access   public
 //@Request  GET
-export async function getBootCamp(req, res, next) {
+export const getBootCamp = routesHandler(async (req, res, next) => {
+    // console.log('hi!');
+    
+    const bootCamp = await bootCampSchema.findById(req.params.id);
+    if (!bootCamp)
+        return res
+            .status(400)
+            .json({ success: false, msg: `No Bootcamp with id ${req.params.id} available` });
 
-    try {
-        const allBC = await bootCampSchema.findById(req.params.id);
-        if (!allBC)
-            return res
-                .status(400)
-                .json({ success: false, msg: `No Bootcamp with id ${req.params.id} available` });
+    res.json({ success: true, bootCamp: bootCamp });
 
-        res.json({ success: true, bootCamps: allBC });
-    }
-    catch (err) {
-        // next(new ErrorResponse(`Bootcamp not found with id ${req.params.id}`, 404));
-        next(err);
-    }
-}
+} )
 
 //@Desc     Create a new Bootcamp
 //@Route    /api/v1/bootcamps/
 //@Access   private, for authorized users
 //@Request  POST
-export async function createBootCamp(req, res, next) {
+export const createBootCamp = routesHandler( async (req, res, next) => {
     //Request bootcamp data from req.body
-    try {
-        const bcJSON = req.body;
+    const bcJSON = req.body;
+    const bootCamp = await bootCampSchema.create(bcJSON);
 
-        res
-            .status(201)
-            .json({ success: true, msg: `Created new bootcamp: ${bcJSON.name}` });
-    }
-    catch(err) {
-        next(err);
-    }
-}
+    res
+        .status(201)
+        .json({ success: true, msg: `Created new bootcamp: ${bootCamp.id}` });
+
+});
 
 //@Desc     Update a Bootcamp
 //@Route    /api/v1/bootcamps/:id
