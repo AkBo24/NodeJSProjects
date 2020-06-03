@@ -7,7 +7,7 @@ import dotenv  from 'dotenv';
 import colors  from 'colors';
 import controller   from './controllers/controller.js';
 import { connectMongo } from './MongoDB/database.js';
-import errorHandler from './Middleware/Error.js';
+import errorHandler from './Middleware/ErrorHandler.js';
 
 //Construct/Set-up the modules
 const server = express();

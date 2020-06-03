@@ -2,7 +2,7 @@
 import { bootCampSchema } from '../MongoDB/Schema/Bootcamp.js';
 import { ErrorResponse  } from '../Utils/ErrorResponse.js'
 
-//@Desc     Get all boot camps
+//@Desc     Get all Bootcamps
 //@Route    /api/v1/bootcamps/
 //@Access   public
 //@Request   GET
@@ -12,7 +12,7 @@ export async function getBootCamps(req, res, next) {
         if(!allBC) 
             return new res
                     .status(400)
-                    .json( {success: false, msg: "No boot camps available"} );
+                    .json( {success: false, msg: "No Bootcamps available"} );
         
         res.json({ success: true, bootCamps: allBC });
     }
@@ -24,7 +24,7 @@ export async function getBootCamps(req, res, next) {
 
 }
 
-//@Desc     Get single boot camp 
+//@Desc     Get single Bootcamp 
 //@Route    /api/v1/bootcamps/:id
 //@Access   public
 //@Request  GET
@@ -35,12 +35,13 @@ export async function getBootCamp(req, res, next) {
         if (!allBC)
             return res
                 .status(400)
-                .json({ success: false, msg: "No boot camps available" });
+                .json({ success: false, msg: `No Bootcamp with id ${req.params.id} available` });
 
         res.json({ success: true, bootCamps: allBC });
     }
     catch (err) {
-        next(new ErrorResponse(`Bootcamp not found with id ${req.params.id}`, 404));
+        // next(new ErrorResponse(`Bootcamp not found with id ${req.params.id}`, 404));
+        next(err);
     }
 }
 
@@ -65,7 +66,7 @@ export async function createBootCamp(req, res, next) {
     }
 }
 
-//@Desc     Update a boot camp
+//@Desc     Update a Bootcamp
 //@Route    /api/v1/bootcamps/:id
 //@Access   private
 //@Request  PUT
@@ -91,7 +92,7 @@ export async function updateCamp(req, res, next) {
     res.json({ success: true, msg: `Updating bootamp ${req.params.id}` });
 }
 
-//@Desc     Delete a boot camps
+//@Desc     Delete a Bootcamp
 //@Route    /api/v1/bootcamps/:id
 //@Access   public
 //@Request  DELETE
