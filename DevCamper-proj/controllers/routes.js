@@ -1,29 +1,29 @@
 
 import { bootCampSchema } from '../MongoDB/Schema/Bootcamp.js';
+import { routesHandler } from '../Middleware/AsyncRoutesHandler.js'
 
-//@Desc     Get all boot camps
+/**
+ * The error is handeled inside ErrorHandler.js
+ */
+
+//@Desc     Get all Bootcamps
 //@Route    /api/v1/bootcamps/
 //@Access   public
 //@Request   GET
-export async function getBootCamps(req, res, next) {
-    try{
-        const allBC = await bootCampSchema.find();
-        if(!allBC) 
-            return new res
-                    .status(400)
-                    .json( {success: false, msg: "No boot camps available"} );
-        
-        res.json({ success: true, bootCamps: allBC });
-    }
-    catch (err) {
-        res
+
+exports.getBootCamps = routesHandler ( async (req, res, next) => {
+
+    const allBC = await bootCampSchema.find();
+    if (!allBC)
+        return new res
             .status(400)
-            .json( {success: false, msg: err} );
-    }
+            .json({ success: false, msg: "No Bootcamps available" });
 
-}
+    res.json({ success: true, bootCamps: allBC });
 
-//@Desc     Get single boot camp 
+});
+
+//@Desc     Get single Bootcamp 
 //@Route    /api/v1/bootcamps/:id
 //@Access   public
 //@Request  GET
@@ -34,14 +34,13 @@ export async function getBootCamp(req, res, next) {
         if (!allBC)
             return res
                 .status(400)
-                .json({ success: false, msg: "No boot camps available" });
+                .json({ success: false, msg: `No Bootcamp with id ${req.params.id} available` });
 
         res.json({ success: true, bootCamps: allBC });
     }
     catch (err) {
-        res
-            .status(400)
-            .json({ success: false, msg: err });
+        // next(new ErrorResponse(`Bootcamp not found with id ${req.params.id}`, 404));
+        next(err);
     }
 }
 
@@ -53,20 +52,17 @@ export async function createBootCamp(req, res, next) {
     //Request bootcamp data from req.body
     try {
         const bcJSON = req.body;
-        const newBootCamp = await bootCampSchema.create(bcJSON);
 
         res
             .status(201)
             .json({ success: true, msg: `Created new bootcamp: ${bcJSON.name}` });
     }
     catch(err) {
-        res
-            .status(400)
-            .json( {success: false, err } );
+        next(err);
     }
 }
 
-//@Desc     Update a boot camp
+//@Desc     Update a Bootcamp
 //@Route    /api/v1/bootcamps/:id
 //@Access   private
 //@Request  PUT
@@ -84,15 +80,11 @@ export async function updateCamp(req, res, next) {
         res.status(200).json( {success: true, msg: `Updated bootcamp ${newBC.name}`} );
     }
     catch(err) {
-        res
-            .status(400)
-            .json({ success: false, err });
+        next(err);
     }
-
-    res.json({ success: true, msg: `Updating bootamp ${req.params.id}` });
 }
 
-//@Desc     Delete a boot camps
+//@Desc     Delete a Bootcamp
 //@Route    /api/v1/bootcamps/:id
 //@Access   public
 //@Request  DELETE
@@ -104,9 +96,7 @@ export async function deleteCamp(req, res, next) {
             .json( {success: true, msg: 'Bootcamp successfully deleted'} );
     }
     catch (err) {
-        res
-            .status(400)
-            .json({ success: false, msg: 'Bootcamp ', err});
+        next(err);
     }
     // res.json({ success: true, msg: `Deleted bootcamp ${req.params.id}` });
 }

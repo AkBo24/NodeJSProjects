@@ -6,7 +6,8 @@ import express from 'express';
 import dotenv  from 'dotenv';
 import colors  from 'colors';
 import controller   from './controllers/controller.js';
-import { connectMongo } from './MongoDB/database.js'
+import { connectMongo } from './MongoDB/database.js';
+import errorHandler from './Middleware/ErrorHandler.js';
 
 //Construct/Set-up the modules
 const server = express();
@@ -18,6 +19,7 @@ connectMongo();
 
 //Web app routes etc
 server.use('/api/v1/bootcamps', controller); //set default route
+server.use(errorHandler);
 // controller();
 
 //Set-up Node Server
