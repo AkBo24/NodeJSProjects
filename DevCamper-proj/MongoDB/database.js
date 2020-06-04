@@ -8,5 +8,4 @@ export async function connectMongo () {
         useUnifiedTopology: true
     });
     console.log(`Connected to mongoDB at ${db.connection.host}`.magenta.bold);
-
 };
