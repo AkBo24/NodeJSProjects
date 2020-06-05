@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import slugify  from 'slugify';
-import geoCoder from '../../Utils/GeoCoder.js';
+import {geoCoder} from '../../Utils/GeoCoder.js';
 
 const BootcampSchema = new mongoose.Schema ({
     name: {
