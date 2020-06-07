@@ -14,7 +14,16 @@ import { geoCoder       } from '../Utils/GeoCoder.js';
 //@Access   public
 //@Request   GET
 export const getBootCamps = routesHandler ( async (req, res, next) => {
-    const allBC = await bootCampSchema.find();
+    console.log(req.query);
+    
+    //Parse any queries, and replace any matching regEx into a MongoseDB object ('$')
+    let queryStr = JSON.stringify(req.query);
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/ , match => `$${match}`);
+
+    const query = bootCampSchema.find(JSON.parse(queryStr));
+    console.log(query);
+    
+    const allBC = await query;
     res.json({ success: true, count: allBC.length, bootCamps: allBC });
 });
 
