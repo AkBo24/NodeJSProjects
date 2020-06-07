@@ -46,11 +46,18 @@ export const getBootCampRad = routesHandler(async (req, res, next) => {
     const lat = loc[0].latitude;
     const lng = loc[0].longitude;
 
+    
     // Calc radius using radians
     // Divide dist by radius of Earth
     // Earth Radius = 3,963 mi / 6,378 km
     const radius = distance / 3963;
+    
+    // console.log(loc);
+    // console.log(lat);
+    // console.log(lng);
+    // console.log(radius);
 
+    //location: { $geoWithin: { $centerSphere: [[lng, lat], radius] } }
     const bootcamps = await bootCampSchema.find({
         location: { $geoWithin: { $centerSphere: [[lng, lat], radius] } }
     });
