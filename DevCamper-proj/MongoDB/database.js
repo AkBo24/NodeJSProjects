@@ -1,5 +1,4 @@
 import mongo from 'mongoose';
-
 export async function connectMongo () {
     const db = await mongo.connect(process.env.MONGO_URI, {
         useNewUrlParser: true, 
@@ -8,5 +7,4 @@ export async function connectMongo () {
         useUnifiedTopology: true
     });
     console.log(`Connected to mongoDB at ${db.connection.host}`.magenta.bold);
-
 };

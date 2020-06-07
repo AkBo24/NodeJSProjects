@@ -6,9 +6,10 @@ const {
     notFound,
     getBootCamps,
     getBootCamp,
+    getBootCampRad,
     createBootCamp,
     updateCamp,
-    deleteCamp
+    deleteCamp,
 } = require('./routes.js');
 
 //Routes config
@@ -20,5 +21,8 @@ routes.route('/:id')
       .get(getBootCamp)
       .put(updateCamp)
       .delete(deleteCamp);
+
+routes.route(`/radius/:zipcode/:distance`)
+      .get(getBootCampRad);
 
 module.exports = routes;

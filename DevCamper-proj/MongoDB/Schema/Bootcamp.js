@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import slugify  from 'slugify';
-import geoCoder from '../../Utils/GeoCoder.js';
+import {geoCoder} from '../../Utils/GeoCoder.js';
 
 const BootcampSchema = new mongoose.Schema ({
     name: {
@@ -110,8 +110,9 @@ BootcampSchema.pre('save',function (next) {
 /* Format the physical location */
 BootcampSchema.pre('save', async function(next) {
     const loc = await geoCoder.geocode(this.address);
+
     this.location = {
-        type: 'point',
+        type: 'Point',
         coordinates: [loc[0].longitude, loc[0].latitude],
         formattedAddress: loc[0].formattedAddress,
         street: loc[0].streetName,
@@ -120,7 +121,7 @@ BootcampSchema.pre('save', async function(next) {
         zipcode: loc[0].zipcode,
         country: loc[0].countryCode,
     }
-
+    
     //Remove address from DB
     this.address = undefined;
 

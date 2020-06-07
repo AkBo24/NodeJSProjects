@@ -4,9 +4,9 @@
   "description": "Dev Camper Project",
   "main": "main.js",
   "scripts": {
-    "test": "nodemon main.js",
     "dev": "nodemon --exec babel-node main.js",
-    "start": ""
+    "start": "",
+    "babel-node": "./node_modules/.bin/babel-node"
   },
   "repository": {
     "type": "git",
@@ -18,15 +18,20 @@
     "url": "https://github.com/AkBo24/NodeJSProjects/issues"
   },
   "dependencies": {
-    "@babel/core": "^7.9.6",
+    "@babel/core": "^7.10.2",
     "@babel/node": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
-    "body-parser": "^1.19.0",
     "colors": "^1.4.0",
     "express": "^4.17.1",
+    "mongoose": "^5.9.17",
+    "node-geocoder": "^3.27.0",
     "nodemon": "^2.0.4",
-    "slugify": "^1.4.0",
-    "node-geocoder": "^3.27.0"
+    "slugify": "^1.4.0"
   },
-  "homepage": "https://github.com/AkBo24/NodeJSProjects#readme"
+  "homepage": "https://github.com/AkBo24/NodeJSProjects#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "dotenv": "^8.2.0"
+  }
 }
