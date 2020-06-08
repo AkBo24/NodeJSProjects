@@ -14,14 +14,25 @@ import { geoCoder       } from '../Utils/GeoCoder.js';
 //@Access   public
 //@Request   GET
 export const getBootCamps = routesHandler ( async (req, res, next) => {
-    console.log(req.query);
     
-    //Parse any queries, and replace any matching regEx into a MongoseDB object ('$')
-    let queryStr = JSON.stringify(req.query);
-    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/ , match => `$${match}`);
+    //Isolate select & other params (creating custom fields)
+    const reqQuery = {...req.query};
+    console.log(reqQuery);
+    const removeFields = ['select']; //fields to exclude
+    removeFields.forEach((param) => delete reqQuery[param]); //loop over removeFields
+    console.log(reqQuery);
+    
 
-    const query = bootCampSchema.find(JSON.parse(queryStr));
-    console.log(query);
+    //Parse any queries, and replace any matching regEx into a MongoseDB object ('$')
+    let queryStr = JSON.stringify(reqQuery);
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/ , match => `$${match}`);
+    let query = bootCampSchema.find(JSON.parse(queryStr));
+
+    //Select Field
+    if (req.query.select) {
+        const select = req.query.select.split(' ').join(' ');
+        query = query.select(select);
+    }
     
     const allBC = await query;
     res.json({ success: true, count: allBC.length, bootCamps: allBC });
@@ -60,11 +71,6 @@ export const getBootCampRad = routesHandler(async (req, res, next) => {
     // Divide dist by radius of Earth
     // Earth Radius = 3,963 mi / 6,378 km
     const radius = distance / 3963;
-    
-    // console.log(loc);
-    // console.log(lat);
-    // console.log(lng);
-    // console.log(radius);
 
     //location: { $geoWithin: { $centerSphere: [[lng, lat], radius] } }
     const bootcamps = await bootCampSchema.find({
