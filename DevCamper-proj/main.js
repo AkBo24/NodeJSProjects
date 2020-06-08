@@ -2,10 +2,11 @@
 
 //Required Modules
 // require("@babel/core").transform("code", options);
-import express from 'express';
-import dotenv  from 'dotenv';
-import colors  from 'colors';
-import controller   from './controllers/controller.js';
+import express   from 'express';
+import dotenv    from 'dotenv';
+import colors    from 'colors';
+import bootcamps from './controllers/controller.js';
+import courses   from './controllers/coursesController.js';
 import { connectMongo } from './MongoDB/database.js';
 import errorHandler from './Middleware/ErrorHandler.js';
 
@@ -17,10 +18,10 @@ dotenv.config( {path: './config/config.env'} ); //get environment enumerators (c
 //Connect to MongoDB
 connectMongo();
 
-//Web app routes etc
-server.use('/api/v1/bootcamps', controller); //set default route
+//Mount Routers
+server.use('/api/v1/bootcamps', bootcamps); //set default route
+server.use('/api/v1/courses', courses);
 server.use(errorHandler);
-// controller();
 
 //Set-up Node Server
 const PORT = process.env.PORT || 3000

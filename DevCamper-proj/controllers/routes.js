@@ -14,8 +14,56 @@ import { geoCoder       } from '../Utils/GeoCoder.js';
 //@Access   public
 //@Request   GET
 export const getBootCamps = routesHandler ( async (req, res, next) => {
-    const allBC = await bootCampSchema.find();
-    res.json({ success: true, count: allBC.length, bootCamps: allBC });
+    
+    //Isolate select & other params (creating custom fields)
+    const reqQuery = {...req.query};
+    const removeFields = ['select', 'sort', 'page', 'limit']; //fields to exclude
+    removeFields.forEach((param) => delete reqQuery[param]); //loop over removeFields
+
+    //Parse any queries, and replace any matching regEx into a MongoseDB object ('$')
+    let queryStr = JSON.stringify(reqQuery);
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/ , match => `$${match}`);
+    let query = bootCampSchema.find(JSON.parse(queryStr));
+
+    //Select Field
+    if (req.query.select) {
+        const select = req.query.select.split(',').join(' ');
+        query = query.select(select);
+    }
+
+    //Sorting
+    if(req.query.sort) {
+        const sortBy = req.query.sort.split(',').join(' ');
+        query = query.sort(sortBy);
+    }
+    else
+        query = query.sort('-createdAt'); //If no sorting option specified, sort by date (younger first)
+
+    //Pagination
+    const page  = parseInt(req.query.page,  10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 25; //The most # of bootcamps to show on a page
+    const startIndex = (page - 1) * limit;
+    const endIndex   = page * limit;
+    const total      = await bootCampSchema.countDocuments();
+    
+    const pagination = {};
+
+    if(endIndex < total) {
+        pagination.next = {
+            page : page + 1,
+            limit
+        }
+    }
+
+    if(startIndex > 0) {
+        pagination.prev = {
+            page: page - 1,
+            limit
+        }
+    }
+    
+    const allBC = await query;
+    res.json({ success: true, count: allBC.length, pagination, bootCamps: allBC });
 });
 
 //@Desc     Get single Bootcamp 
@@ -51,11 +99,6 @@ export const getBootCampRad = routesHandler(async (req, res, next) => {
     // Divide dist by radius of Earth
     // Earth Radius = 3,963 mi / 6,378 km
     const radius = distance / 3963;
-    
-    // console.log(loc);
-    // console.log(lat);
-    // console.log(lng);
-    // console.log(radius);
 
     //location: { $geoWithin: { $centerSphere: [[lng, lat], radius] } }
     const bootcamps = await bootCampSchema.find({

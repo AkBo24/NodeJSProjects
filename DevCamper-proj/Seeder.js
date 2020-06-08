@@ -56,7 +56,7 @@ const deleteBC = async () => {
 
 /* RC Commands to import/delete data */
 console.log(process.argv);
-const args = process.argv.slice(2);
+const args = process.argv[3];
 console.log(args);
 
 if(process.argv[2] === '-i')
