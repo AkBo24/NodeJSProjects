@@ -23,7 +23,7 @@
     "@babel/preset-env": "^7.10.2",
     "colors": "^1.4.0",
     "express": "^4.17.1",
-    "mongoose": "^5.9.17",
+    "mongoose": "^5.9.18",
     "node-geocoder": "^3.27.0",
     "nodemon": "^2.0.4",
     "slugify": "^1.4.0"

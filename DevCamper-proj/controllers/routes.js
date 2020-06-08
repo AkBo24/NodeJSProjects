@@ -17,7 +17,7 @@ export const getBootCamps = routesHandler ( async (req, res, next) => {
     
     //Isolate select & other params (creating custom fields)
     const reqQuery = {...req.query};
-    const removeFields = ['select', `sort`]; //fields to exclude
+    const removeFields = ['select', 'sort', 'page', 'limit']; //fields to exclude
     removeFields.forEach((param) => delete reqQuery[param]); //loop over removeFields
 
     //Parse any queries, and replace any matching regEx into a MongoseDB object ('$')
@@ -31,16 +31,39 @@ export const getBootCamps = routesHandler ( async (req, res, next) => {
         query = query.select(select);
     }
 
+    //Sorting
     if(req.query.sort) {
         const sortBy = req.query.sort.split(',').join(' ');
         query = query.sort(sortBy);
     }
     else
-        query = query.sort(`-createdAt`);
+        query = query.sort('-createdAt'); //If no sorting option specified, sort by date (younger first)
 
+    //Pagination
+    const page  = parseInt(req.query.page,  10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 25;
+    const startIndex = (page - 1) * limit;
+    const endIndex   = page * limit;
+    const total      = await bootCampSchema.countDocuments();
+    
+    const pagination = {};
+
+    if(endIndex < total) {
+        pagination.next = {
+            page : page + 1,
+            limit
+        }
+    }
+
+    if(startIndex > 0) {
+        pagination.prev = {
+            page: page - 1,
+            limit
+        }
+    }
     
     const allBC = await query;
-    res.json({ success: true, count: allBC.length, bootCamps: allBC });
+    res.json({ success: true, count: allBC.length, pagination, bootCamps: allBC });
 });
 
 //@Desc     Get single Bootcamp 
