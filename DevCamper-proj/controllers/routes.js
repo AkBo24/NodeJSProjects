@@ -17,7 +17,7 @@ export const getBootCamps = routesHandler ( async (req, res, next) => {
     
     //Isolate select & other params (creating custom fields)
     const reqQuery = {...req.query};
-    const removeFields = ['select']; //fields to exclude
+    const removeFields = ['select', `sort`]; //fields to exclude
     removeFields.forEach((param) => delete reqQuery[param]); //loop over removeFields
 
     //Parse any queries, and replace any matching regEx into a MongoseDB object ('$')
@@ -31,6 +31,12 @@ export const getBootCamps = routesHandler ( async (req, res, next) => {
         query = query.select(select);
     }
 
+    if(req.query.sort) {
+        const sortBy = req.query.sort.split(',').join(' ');
+        query = query.sort(sortBy);
+    }
+    else
+        query = query.sort(`-createdAt`);
 
     
     const allBC = await query;
