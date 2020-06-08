@@ -1,8 +1,9 @@
-import { mongoose } from "mongoose";
+import mongoose from "mongoose";
 
-export const coursesSchema = new mongoose.Schema ({
+const CoursesSchema = new mongoose.Schema ({
     title : {
         type: String,
+        trim: true,
         required: [true, 'Enter a course title']
     },
     description : {
@@ -17,7 +18,6 @@ export const coursesSchema = new mongoose.Schema ({
         type: Number,
         required: [true, 'Enter course tuition']
     },
-
     minimumSkill: {
         type: String,
         required: [true, 'Enter course minimum skill level'],
@@ -38,3 +38,5 @@ export const coursesSchema = new mongoose.Schema ({
     },
 
 });
+
+export const coursesSchema = mongoose.model('Courses', CoursesSchema);

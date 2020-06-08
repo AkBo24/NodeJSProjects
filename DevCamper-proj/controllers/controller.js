@@ -1,7 +1,9 @@
+
+/* Handle Bootcamp CRUD Requests*/
 import express from 'express';
 const  routes = express.Router();
 
-//Get route middleware
+//Get bootcamp middleware
 const {
     notFound,
     getBootCamps,
@@ -12,7 +14,7 @@ const {
     deleteCamp,
 } = require('./routes.js');
 
-//Routes config
+//Bootcamp request handlers config
 routes.route('/')
       .get(getBootCamps)
       .post(createBootCamp);
