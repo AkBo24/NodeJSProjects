@@ -33,7 +33,8 @@ export const coursesSchema = new mongoose.Schema ({
     },
     bootcamp: {
         type: String,
-        required: [true, 'Enter course\'s boot camp']
+        ref: 'BootcampSchema',
+        required: [true, 'Enter course\'s bootcamp']
     },
 
 });
