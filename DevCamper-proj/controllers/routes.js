@@ -37,7 +37,7 @@ export const getBootCamps = routesHandler ( async (req, res, next) => {
         query = query.sort(sortBy);
     }
     else
-        query = query.sort('-createdAt'); //If no sorting option specified, sort by date (younger first)
+        query = query.sort('-createdAt');              //If no sorting option specified, sort by date (younger first)
 
     //Pagination
     const page  = parseInt(req.query.page,  10) || 1;

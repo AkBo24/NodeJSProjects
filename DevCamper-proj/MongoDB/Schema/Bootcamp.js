@@ -101,7 +101,7 @@ const BootcampSchema = new mongoose.Schema ({
 });
 
 
-/* Preware, generate a url friendly name for each new bootcamp added */
+/* Preware: generate a url friendly name for each new bootcamp added */
 BootcampSchema.pre('save',function (next) {
     this.slug = slugify(this.name, { lower:true, } );
     next();
