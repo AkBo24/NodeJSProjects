@@ -17,7 +17,7 @@ export const getCourses = routesHandler ( async(req, res, next) => {
     const allCourses = await coursesSchema.find();
     res
         .status(200)
-        .json({ success: true, data: allCourses });
+        .json({ success: true, count: allCourses.length, data: allCourses });
 });
 
 //@Desc     Get all Courses or the courses of a specific bootcamp

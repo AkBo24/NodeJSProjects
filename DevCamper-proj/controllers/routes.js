@@ -23,6 +23,8 @@ export const getBootCamps = routesHandler ( async (req, res, next) => {
     //Parse any queries, and replace any matching regEx into a MongoseDB object ('$')
     let queryStr = JSON.stringify(reqQuery);
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/ , match => `$${match}`);
+
+    //Find any bootcamps w/ query and Populate each bootcamp w/ its courses
     let query = bootCampSchema.find(JSON.parse(queryStr)).populate('courses');
 
     //Select Field
@@ -146,13 +148,16 @@ export const updateCamp = routesHandler(async (req, res, next) => {
 //@Access   public
 //@Request  DELETE
 export const deleteCamp = routesHandler(async (req, res, next) => {
-    const delBC = await bootCampSchema.findByIdAndDelete(req.params.id);
+    const delBC = await bootCampSchema.findById(req.params.id);
     
     if(!delBC)
         return next(
             new ErrorResponse(`Bootcamp with id "${req.params.id}" could not be found`, 404)
         );
 
+
+    //Remove the bootcamp & all courses (refer to preware on Bootcamp.js)
+    delBC.remove();
     res.status(200).json({ success: true, msg: `Bootcamp successfully deleted (id="${delBC.id}")` });
 });
 

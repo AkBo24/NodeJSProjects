@@ -110,7 +110,9 @@ BootcampSchema.pre('save',function (next) {
     next();
 });
 
-/* Format the physical location */
+/* BootcampSchema Preware */
+
+//Format the physical location
 BootcampSchema.pre('save', async function(next) {
     const loc = await geoCoder.geocode(this.address);
 
@@ -128,6 +130,11 @@ BootcampSchema.pre('save', async function(next) {
     //Remove address from DB
     this.address = undefined;
     next();
+});
+
+//Cascade delete bootcamp whne a specific bootcamp is deleted
+BootcampSchema.pre('remove', async function() {
+    await this.model('Courses').deleteMany({bootcamp: this._id})
 });
 
 // Reverse populate the bootcamp collection w/ course collection
