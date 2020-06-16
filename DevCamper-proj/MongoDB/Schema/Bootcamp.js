@@ -98,6 +98,9 @@ const BootcampSchema = new mongoose.Schema ({
         type: Date,
         default: Date.now
     },
+}, {
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true}
 });
 
 
@@ -124,7 +127,15 @@ BootcampSchema.pre('save', async function(next) {
     
     //Remove address from DB
     this.address = undefined;
-
     next();
 });
+
+// Reverse populate the bootcamp collection w/ course collection
+BootcampSchema.virtual('courses', {
+    ref: 'Courses',
+    localField: '_id',
+    foreignField: 'bootcamp',
+    justOne: false
+});
+
 export const bootCampSchema = mongoose.model('Boot-camps', BootcampSchema, 'bootcamps');

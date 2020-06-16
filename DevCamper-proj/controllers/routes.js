@@ -23,7 +23,7 @@ export const getBootCamps = routesHandler ( async (req, res, next) => {
     //Parse any queries, and replace any matching regEx into a MongoseDB object ('$')
     let queryStr = JSON.stringify(reqQuery);
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/ , match => `$${match}`);
-    let query = bootCampSchema.find(JSON.parse(queryStr));
+    let query = bootCampSchema.find(JSON.parse(queryStr)).populate('courses');
 
     //Select Field
     if (req.query.select) {
