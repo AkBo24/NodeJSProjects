@@ -9,7 +9,8 @@ const {
     getCourses,
     createCourse,
     getSpecificCourse,
-    updateCourse
+    updateCourse,
+    deleteCourse
 } = require('./courses.js');
 
 routes.route('/')
@@ -21,5 +22,8 @@ routes.route('/:bcID')
 
 routes.route('/:courseId')
       .put(updateCourse);
+
+routes.route('/:courseId')
+      .delete(deleteCourse);
 
 module.exports = routes;

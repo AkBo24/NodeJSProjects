@@ -71,7 +71,7 @@ export const createCourse = routesHandler( async (req, res, next) => {
 //@Desc     Update a course for a bootcamp
 //@Route    /api/v1/courses/:id
 //@Access   Private
-//@Request  POST
+//@Request  PUT
 export const updateCourse = routesHandler( async (req, res, next) => {
     
     const updatedCourse = await coursesSchema.findByIdAndUpdate(req.params.courseId, req.body,{
@@ -79,10 +79,25 @@ export const updateCourse = routesHandler( async (req, res, next) => {
         runValidators: true
     });
 
-    console.log(updatedCourse);
-    
-
     res
         .status(200)
         .json({ success: true, msg: `Upated course with id: ${req.params.courseId}` } );
+});
+
+//@Desc     Delete a course with a given ID
+//@Route    /api/v1/courses/:id
+//@Access   Private
+//@Request  DELETE
+export const deleteCourse = routesHandler( async (req, res, next) => {
+    const delCourse = await coursesSchema.findByIdAndDelete(req.params.courseId);
+    
+    if(!delCourse) {
+        return next(
+            new ErrorResponse(`Error with deleting with id ${req.params.courseId}`)
+        );
+    }
+
+    res
+        .status(200)
+        .json({ success: true, msg: `Course with id ${delCourse.id} successfully deleted` });
 });
