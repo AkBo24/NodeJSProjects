@@ -14,9 +14,9 @@ const errorHandler = (err, req, res, next) => {
         error   = new ErrorResponse(message, 404);
     }
     //@Request  : POST
-    //@Desc     : Pushing/creating a boot camp that already exists in the database
+    //@Desc     : Pushing/creating an that already exists in the database
     if (err.code === 11000) {
-        message = `Bootcamp already exists (duplicate id)`
+        message = 'Duplicate Item'
         error   =  new ErrorResponse(message, 400);
     }
     
