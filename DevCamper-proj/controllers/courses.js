@@ -57,14 +57,32 @@ export const getSpecificCourse = routesHandler (async (req, res, next) => {
 
 //@Desc     Create a course for a bootcamp
 //@Route    /api/v1/courses/
-//@Access   public
+//@Access   Private
 //@Request  POST
 export const createCourse = routesHandler( async (req, res, next) => {
     const courseJSON   = req.body;
     const newCourse    = await coursesSchema.create(courseJSON);
-    console.log(newCourse);
     
     res
         .status(201)
         .json({ success: true, mssg: `Created new course (${newCourse.id})`});
 })
+
+//@Desc     Update a course for a bootcamp
+//@Route    /api/v1/courses/:id
+//@Access   Private
+//@Request  POST
+export const updateCourse = routesHandler( async (req, res, next) => {
+    
+    const updatedCourse = await coursesSchema.findByIdAndUpdate(req.params.courseId, req.body,{
+        new: true,
+        runValidators: true
+    });
+
+    console.log(updatedCourse);
+    
+
+    res
+        .status(200)
+        .json({ success: true, msg: `Upated course with id: ${req.params.courseId}` } );
+});

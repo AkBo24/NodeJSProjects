@@ -140,7 +140,6 @@ export const updateCamp = routesHandler(async (req, res, next) => {
     });
 
     res.status(200).json( { success: true, msg: `Updated bootcamp ${newBC.name}` } );
-
 });
 
 //@Desc     Delete a Bootcamp
@@ -158,15 +157,7 @@ export const deleteCamp = routesHandler(async (req, res, next) => {
 
     //Remove the bootcamp & all courses (refer to preware on Bootcamp.js)
     delBC.remove();
-    res.status(200).json({ success: true, msg: `Bootcamp successfully deleted (id="${delBC.id}")` });
+    res
+        .status(200)
+        .json({ success: true, msg: `Bootcamp successfully deleted (id="${delBC.id}")` });
 });
-
-
-
-// routes.get('/', (req, res) => {
-//     res.status(404).json({ success: false, msg: "page not found" })
-// });
-
-// exports.notFound(req, res, next) {
-//     res.status(404).json({ success: false, msg: "page not found" });
-// }
