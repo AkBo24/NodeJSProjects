@@ -21,7 +21,7 @@
     "@babel/node": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "colors": "^1.4.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "mongoose": "^5.9.19",
     "node-geocoder": "^3.27.0",
     "nodemon": "^2.0.4",
