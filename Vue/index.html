@@ -12,6 +12,7 @@
             <p>Number of reads: {{numOfReads}}</p>
             <button v-on:click="numOfReads++">Increase Reads</button>
             <button @click="decreaseReads">Decrease Reads</button>
+            <div @click="changeTitle('Your Dad')">New title</div>
         </div>
         <script src="app.js"></script>
     </body>
