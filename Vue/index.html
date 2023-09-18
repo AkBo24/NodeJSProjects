@@ -8,7 +8,10 @@
     <body>
         <h1>Learn Vue</h1>
         <div id="app">
-            <h2>{{title}}</h2>
+            <h2>Book Name: {{title}}</h2>
+            <p>Number of reads: {{numOfReads}}</p>
+            <button v-on:click="numOfReads++">Increase Reads</button>
+            <button @click="decreaseReads">Decrease Reads</button>
         </div>
         <script src="app.js"></script>
     </body>
