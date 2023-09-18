@@ -13,6 +13,11 @@
             <button v-on:click="numOfReads++">Increase Reads</button>
             <button @click="decreaseReads">Decrease Reads</button>
             <div @click="changeTitle('Your Dad')">New title</div>
+
+            <div>
+                <span v-if="evalBook">Sheesh</span>
+                <span v-else>Oof</span>
+            </div>
         </div>
         <script src="app.js"></script>
     </body>
