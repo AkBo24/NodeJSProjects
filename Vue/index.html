@@ -24,6 +24,7 @@
                 <li v-for="book in books">
                     <h3>{{book.title}}</h3>
                     <p>by {{book.author}}</p>
+                    <img v-bind:src="book.img" :alt="book.title" />
                 </li>
             </ul>
         </div>
