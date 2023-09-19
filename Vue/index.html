@@ -4,20 +4,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Learn vue</title>
         <script src="https://unpkg.com/vue@3.0.2"></script>
+
+        <style>
+            .box {
+                padding: 100px 0;
+                width: 400px;
+                text-align: center;
+                background: #ddd;
+                margin: 20px;
+                display: inline-block;
+            }
+        </style>
     </head>
     <body>
         <h1>Learn Vue</h1>
         <div id="app">
             <h2>Book Name: {{title}}</h2>
-            <p>Number of reads: {{numOfReads}}</p>
-            <button v-on:click="numOfReads++">Increase Reads</button>
-            <button @click="decreaseReads">Decrease Reads</button>
-            <div @click="changeTitle('Your Dad')">New title</div>
-
-            <div>
-                <span v-if="evalBook">Sheesh</span>
-                <span v-else>Oof</span>
-            </div>
+            <div class="box" v-on:mouseenter="mouseEnter">Mouse Enter</div>
+            <div class="box" @mouseleave="mouseLeave($event, 5)">Mouse Leave</div>
+            <div class="box" @doubleclick="mouseLeave($event, 5)">Mouse Leave</div>
         </div>
         <script src="app.js"></script>
     </body>
