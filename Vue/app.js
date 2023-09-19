@@ -32,5 +32,10 @@ const app = Vue.createApp({
             this.books[bookId].isFav = !this.books[bookId].isFav;
         },
     },
+    computed: {
+        filteredBooks() {
+            return this.books.filter((book) => book.isFav);
+        },
+    },
 });
 app.mount('#app');

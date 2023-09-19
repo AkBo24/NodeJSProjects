@@ -49,6 +49,15 @@
                     <img v-bind:src="book.img" :alt="book.title" />
                 </li>
             </ul>
+
+            <h4>Fav Books</h4>
+            <ul>
+                <li v-for="book in filteredBooks">
+                    <h3>{{book.title}}</h3>
+                    <p>by {{book.author}}</p>
+                    <img v-bind:src="book.img" :alt="book.title" />
+                </li>
+            </ul>
         </div>
         <script src="app.js"></script>
     </body>
