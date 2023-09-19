@@ -20,9 +20,12 @@
         <h1>Learn Vue</h1>
         <div id="app">
             <h2>Book Name: {{title}}</h2>
-            <div class="box" v-on:mouseenter="mouseEnter">Mouse Enter</div>
-            <div class="box" @mouseleave="mouseLeave($event, 5)">Mouse Leave</div>
-            <div class="box" @doubleclick="mouseLeave($event, 5)">Mouse Leave</div>
+            <ul>
+                <li v-for="book in books">
+                    <h3>{{book.title}}</h3>
+                    <p>by {{book.author}}</p>
+                </li>
+            </ul>
         </div>
         <script src="app.js"></script>
     </body>
